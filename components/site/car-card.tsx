@@ -9,7 +9,7 @@ type Car = typeof cars.$inferSelect
 function CoverImage({ url, alt, sizes }: { url: string | null; alt: string; sizes: string }) {
   if (!url) {
     return (
-      <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#F0EFEA] to-[#E2E0D9] text-[10px] font-semibold uppercase tracking-wide text-[#A8A59C]">
+      <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#F0EFEA] to-[#E2E0D9] text-[10px] font-semibold uppercase tracking-wide text-[#5A5A57]">
         Foto do carro
       </div>
     )
@@ -52,7 +52,7 @@ export function CarCardWide({ car, coverUrl }: { car: Car; coverUrl: string | nu
       </div>
       <div className="flex flex-1 flex-col gap-1.5 p-4">
         <div className="flex items-center justify-between gap-2">
-          <span className="w-fit rounded-full bg-[#EAF1FE] px-2 py-0.5 font-body text-[9px] font-bold text-[#1F6FEB]">
+          <span className="w-fit rounded-full bg-[#EAF1FE] px-2 py-0.5 font-body text-[9px] font-bold text-[#1A5FCB]">
             {originLabel(car.origin)}
           </span>
           <FavoriteButton carId={car.id} />

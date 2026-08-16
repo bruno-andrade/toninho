@@ -28,6 +28,11 @@ type ActionResult<T> =
 
 **Dinheiro**: os formulários trabalham com `number` em reais (ex. `68900.00`); a conversão para `numeric(12,2)` é responsabilidade da camada de persistência.
 
+**Nota sobre as assinaturas reais (implementação, não o contrato conceitual acima):**
+- Actions ligadas a um `<form>` via `useActionState` (`loginAction`, `createCarAction`, `updateCarBasicsAction`, `updateCarHistoryAction`, `updateSiteSettingsAction`, `submitSellRequestAction`) têm assinatura `(prevState, formData: FormData)`, não o objeto tipado mostrado nos contratos abaixo — os campos são lidos de dentro do `FormData`. `createCarAction` e `updateCarBasicsAction`, no caminho de sucesso, chamam `redirect()` diretamente em vez de retornar `ActionResult<T>` (só o caminho de erro retorna o formato `ActionResult`).
+- As demais actions (chamadas diretamente por um handler de clique, não por um `<form>`) recebem os campos como **argumentos posicionais**, não como um único objeto `{ campo: valor }`: `publishCarAction(carId)`, `setCarStatusAction(carId, status)`, `archiveCarAction(carId, archived)`, `attachCarPhotoAction(carId, url)`, `setCoverPhotoAction(carId, photoId)`, `deleteCarPhotoAction(photoId)`, `reorderCarPhotosAction(carId, orderedPhotoIds)`, `updateInspectionItemsAction(carId, items)`, `updateSellRequestStatusAction(submissionId, status, internalNotes)`, `createCarFromSellRequestAction(submissionId)`.
+- `loginAction`/`logoutAction` não usam o formato `ActionResult<T>`: `loginAction` retorna `{ error?: string }` (sem `code`) e `logoutAction` não recebe input nem retorna valor — só limpa o cookie e redireciona.
+
 ---
 
 ## 1. Autenticação

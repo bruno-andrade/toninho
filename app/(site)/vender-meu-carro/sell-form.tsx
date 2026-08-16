@@ -116,7 +116,7 @@ export function SellForm() {
 
       <p className="font-body text-xs text-[#6B6B68]">
         Seus dados são usados só para contato sobre a avaliação do seu carro pela equipe AuToninho. Veja a{" "}
-        <Link href="/politica-de-privacidade" className="underline hover:text-[#FF5A36]">
+        <Link href="/politica-de-privacidade" className="underline hover:text-[#C93A1A]">
           política de privacidade
         </Link>
         .
@@ -125,7 +125,7 @@ export function SellForm() {
       <button
         type="submit"
         disabled={pending || uploading}
-        className="self-start rounded-lg bg-[#FF5A36] px-6 py-3 font-body text-sm font-bold text-white transition hover:bg-[#E14A28] disabled:cursor-not-allowed disabled:opacity-60"
+        className="self-start rounded-lg bg-[#C93A1A] px-6 py-3 font-body text-sm font-bold text-white transition hover:bg-[#B83318] disabled:cursor-not-allowed disabled:opacity-60"
       >
         {pending ? "Enviando…" : "Enviar solicitação"}
       </button>

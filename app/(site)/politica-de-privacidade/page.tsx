@@ -9,7 +9,7 @@ export default function PrivacyPolicyPage() {
   return (
     <div className="mx-auto flex max-w-2xl flex-col gap-6 px-6 py-14 font-body text-sm leading-relaxed text-[#1A1A1A] sm:px-12">
       <div className="flex flex-col gap-2">
-        <span className="font-body text-[11px] font-bold uppercase tracking-wider text-[#FF5A36]">
+        <span className="font-body text-[11px] font-bold uppercase tracking-wider text-[#C93A1A]">
           Privacidade
         </span>
         <h1 className="font-heading text-2xl font-extrabold text-[#1A1A1A]">Política de privacidade</h1>
@@ -74,7 +74,7 @@ export default function PrivacyPolicyPage() {
         </p>
       </section>
 
-      <p className="text-xs text-[#A8A59C]">
+      <p className="text-xs text-[#6B6B68]">
         Este texto é um aviso genérico de privacidade, ainda pendente de revisão com os dados legais definitivos da
         loja.
       </p>

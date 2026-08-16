@@ -81,8 +81,8 @@ export default async function BuscaPage(props: PageProps<"/busca">) {
 
   return (
     <div>
-      <div className="px-6 py-4 font-body text-xs text-[#A8A59C] sm:px-12">
-        <Link href="/" className="hover:text-[#FF5A36]">
+      <div className="px-6 py-4 font-body text-xs text-[#6B6B68] sm:px-12">
+        <Link href="/" className="hover:text-[#C93A1A]">
           Início
         </Link>{" "}
         / Comprar carros
@@ -94,8 +94,11 @@ export default async function BuscaPage(props: PageProps<"/busca">) {
       <div className="flex flex-col gap-8 px-6 py-8 sm:flex-row sm:px-12">
         <form method="get" className="flex w-full flex-none flex-col gap-5 sm:w-60">
           <div>
-            <div className="mb-2 font-heading text-[13px] font-bold text-[#1A1A1A]">Ordenar por</div>
+            <label htmlFor="ordenar" className="mb-2 block font-heading text-[13px] font-bold text-[#1A1A1A]">
+              Ordenar por
+            </label>
             <select
+              id="ordenar"
               name="ordenar"
               defaultValue={filters.sort ?? "relevancia"}
               className="w-full rounded-lg border border-[#E6E4DF] px-3 py-2 font-body text-[13px] text-[#1A1A1A]"
@@ -112,7 +115,7 @@ export default async function BuscaPage(props: PageProps<"/busca">) {
             <div className="mb-2 font-heading text-[13px] font-bold text-[#1A1A1A]">Marca</div>
             <div className="flex flex-col gap-1.5 font-body text-[13px] text-[#1A1A1A]">
               {brands.length === 0 ? (
-                <span className="text-[#A8A59C]">Nenhuma marca disponível ainda</span>
+                <span className="text-[#6B6B68]">Nenhuma marca disponível ainda</span>
               ) : (
                 brands.map((brand) => (
                   <label key={brand.brand} className="flex items-center gap-2">
@@ -234,7 +237,7 @@ export default async function BuscaPage(props: PageProps<"/busca">) {
 
           <button
             type="submit"
-            className="rounded-lg bg-[#FF5A36] py-2.5 text-center font-body text-[13px] font-bold text-white"
+            className="rounded-lg bg-[#C93A1A] py-2.5 text-center font-body text-[13px] font-bold text-white"
           >
             Aplicar filtros
           </button>
@@ -259,7 +262,7 @@ export default async function BuscaPage(props: PageProps<"/busca">) {
                 <a
                   key={p}
                   href={pageHref(searchParams, p)}
-                  className={p === page ? "font-extrabold text-[#FF5A36]" : ""}
+                  className={p === page ? "font-extrabold text-[#C93A1A]" : ""}
                 >
                   {p}
                 </a>

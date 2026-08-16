@@ -58,7 +58,12 @@ Verificado de ponta a ponta com Playwright + inspeção direta do Neon: laudo e 
 
 ## Fase 4 — Polimento e lançamento
 
-- [ ] Lighthouse (performance/SEO/acessibilidade) nas páginas públicas
-- [ ] Conferência mobile/desktop da implementação real
+- [x] Lighthouse (performance/SEO/acessibilidade) nas páginas públicas — todas as 6 páginas (Home, Busca, Detalhe, Como funciona, Vender meu carro, Favoritos) com Acessibilidade 100/100 e Boas práticas 100/100. Correções aplicadas:
+  - Contraste de cor (WCAG AA 4.5:1): a cor de marca `#FF5A36` e o cinza `#A8A59C` usados como texto/ícone/link não atingiam contraste suficiente — trocados por `#C93A1A` (com hover `#B83318`) e `#6B6B68`/`#5A5A57`/`#1A5FCB` conforme o fundo de cada uso. `#FF5A36` original seguiu disponível só como cor decorativa, não como texto.
+  - Rótulo do `<select>` "Ordenar por" na Busca sem associação (`select-name`) — corrigido com `<label htmlFor>`/`id`.
+  - Alvo de toque do botão de favoritar pequeno demais (`target-size`) — área clicável ampliada pra 24×24px sem alterar o glifo visual.
+  - `htmlLimitedBots` configurado em `next.config.ts` pra garantir que bots de preview de link (WhatsApp incluso — canal de contato principal do site) sempre recebam a metadata já resolvida no `<head>`, e não a versão em streaming.
+  - Dois "achados" do Lighthouse verificados e descartados por não serem bugs reais: `is-crawlable` em `/favoritos` (página é `noindex` de propósito, só tem conteúdo de `localStorage` por usuário) e `meta-description` ausente em `/carro/[slug]` num único run (confirmado via `curl` com 3 user-agents diferentes que a tag existe corretamente dentro do `<head>` — falso negativo do próprio Lighthouse).
+- [x] Conferência mobile/desktop da implementação real — verificado com Playwright (viewports 390×844 e 1440×900) nas 6 páginas públicas + política de privacidade, com 2 carros de teste reais (com foto) pra validar grid/cards/galeria. Sem overflow, sem quebra de layout; dados limpos do Neon/Blob depois.
 - [ ] Domínio próprio (`autoninho.com.br`) — compra e configuração, fora do tier grátis de hospedagem
 - [ ] Revisão final: docs batendo com o que foi implementado

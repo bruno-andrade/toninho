@@ -1,8 +1,11 @@
 "use server"
 
+import { revalidatePath } from "next/cache"
 import type { ActionResult } from "@/lib/actions/action-result"
+import { getDb } from "@/lib/db/client"
+import { siteSettings } from "@/lib/db/schema"
 
-export type UpdateSiteSettingsState = ActionResult<void> | null
+export type UpdateSiteSettingsState = ActionResult<null> | null
 
 export async function updateSiteSettingsAction(
   _prevState: UpdateSiteSettingsState,
@@ -13,8 +16,9 @@ export async function updateSiteSettingsAction(
   const storeName = get("storeName")
   const whatsappNumber = get("whatsappNumber")
   const addressStreet = get("addressStreet")
+  const addressNeighborhood = get("addressNeighborhood")
   const city = get("city")
-  const state = get("state")
+  const state = get("state").toUpperCase()
   const zipCode = get("zipCode")
 
   const fieldErrors: Record<string, string[]> = {}
@@ -31,12 +35,29 @@ export async function updateSiteSettingsAction(
     return { ok: false, error: { code: "VALIDATION_ERROR", message: "Revise os campos destacados.", fieldErrors } }
   }
 
-  return {
-    ok: false,
-    error: {
-      code: "NOT_IMPLEMENTED",
-      message:
-        "Configurações ainda não estão conectadas ao banco de dados. Próxima etapa: tabela site_settings (ver docs/DATA_MODEL.md).",
-    },
+  const values = {
+    id: 1,
+    storeName,
+    whatsappNumber,
+    addressStreet,
+    addressNeighborhood: addressNeighborhood || null,
+    city,
+    state,
+    zipCode,
   }
+
+  try {
+    await getDb()
+      .insert(siteSettings)
+      .values(values)
+      .onConflictDoUpdate({ target: siteSettings.id, set: values })
+  } catch {
+    return {
+      ok: false,
+      error: { code: "DB_ERROR", message: "Não foi possível salvar as configurações. Tente novamente." },
+    }
+  }
+
+  revalidatePath("/admin/settings")
+  return { ok: true, data: null }
 }

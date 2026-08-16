@@ -98,6 +98,8 @@ export async function updateCarBasicsAction(
 
   revalidatePath(`/admin/cars/${carId}`)
   revalidatePath("/admin/cars")
+  revalidatePath("/")
+  revalidatePath("/busca")
   return { ok: true, data: null }
 }
 
@@ -135,5 +137,69 @@ export async function publishCarAction(carId: string): Promise<ActionResult<null
 
   revalidatePath(`/admin/cars/${carId}`)
   revalidatePath("/admin/cars")
+  revalidatePath("/")
+  revalidatePath("/busca")
+  return { ok: true, data: null }
+}
+
+const SETTABLE_STATUSES = ["available", "reserved", "sold"] as const
+
+export async function setCarStatusAction(
+  carId: string,
+  status: (typeof SETTABLE_STATUSES)[number]
+): Promise<ActionResult<null>> {
+  if (!SETTABLE_STATUSES.includes(status)) {
+    return { ok: false, error: { code: "VALIDATION_ERROR", message: "Status inválido." } }
+  }
+
+  const db = getDb()
+  const [car] = await db
+    .select({ status: cars.status, archived: cars.archived })
+    .from(cars)
+    .where(eq(cars.id, carId))
+    .limit(1)
+  if (!car) {
+    return { ok: false, error: { code: "NOT_FOUND", message: "Carro não encontrado." } }
+  }
+  if (car.status === "draft" || car.archived) {
+    return {
+      ok: false,
+      error: { code: "INVALID_TRANSITION", message: "Publique o carro antes de alterar o status." },
+    }
+  }
+
+  try {
+    await db
+      .update(cars)
+      .set({
+        status,
+        soldAt: status === "sold" ? new Date() : null,
+        updatedAt: new Date(),
+      })
+      .where(eq(cars.id, carId))
+  } catch {
+    return { ok: false, error: { code: "DB_ERROR", message: "Não foi possível atualizar o status." } }
+  }
+
+  revalidatePath(`/admin/cars/${carId}`)
+  revalidatePath("/admin/cars")
+  revalidatePath("/")
+  revalidatePath("/busca")
+  return { ok: true, data: null }
+}
+
+export async function archiveCarAction(carId: string, archived: boolean): Promise<ActionResult<null>> {
+  const db = getDb()
+
+  try {
+    await db.update(cars).set({ archived, updatedAt: new Date() }).where(eq(cars.id, carId))
+  } catch {
+    return { ok: false, error: { code: "DB_ERROR", message: "Não foi possível atualizar o carro." } }
+  }
+
+  revalidatePath(`/admin/cars/${carId}`)
+  revalidatePath("/admin/cars")
+  revalidatePath("/")
+  revalidatePath("/busca")
   return { ok: true, data: null }
 }

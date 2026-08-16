@@ -331,6 +331,9 @@ Para completar o quadro — estas telas carregam dados direto via Server Compone
 
 ## 10. Próximos passos técnicos
 
-1. Escolher a lib de schema/validação (ex. Zod) e escrever os schemas compartilhados entre client e server a partir dos contratos acima.
-2. Implementar o Route Handler de upload (`/api/car-photos/upload-token`) seguindo o guia de client upload do `@vercel/blob`.
-3. Definir a estratégia de rate limiting (ex. Vercel Firewall / `@vercel/functions` rate limit helper) para `submitSellRequestAction` e `POST /api/events`.
+**Atualização:** `createCarAction`, `updateCarBasicsAction`, `updateSiteSettingsAction`, `publishCarAction` e todas as actions de fotos (`attachCarPhotoAction`, `setCoverPhotoAction`, `deleteCarPhotoAction`, `reorderCarPhotosAction`) já estão implementadas com Drizzle/Neon, verificadas de ponta a ponta (Playwright + inspeção direta do banco). O Route Handler `/api/car-photos/upload-token` também já existe. Restam:
+
+1. Escolher a lib de schema/validação (ex. Zod) e escrever os schemas compartilhados entre client e server a partir dos contratos acima (hoje a validação é manual, por função).
+2. `updateInspectionItemsAction` e `updateCarHistoryAction` (abas "Laudo de inspeção" e "Histórico", ainda placeholders).
+3. `submitSellRequestAction`, `updateSellRequestStatusAction` e `createCarFromSellRequestAction` (fluxo "Vender meu carro", depende do formulário público que ainda não existe).
+4. Definir a estratégia de rate limiting (ex. Vercel Firewall / `@vercel/functions` rate limit helper) para `submitSellRequestAction` e `POST /api/events`.

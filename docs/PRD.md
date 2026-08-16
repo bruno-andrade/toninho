@@ -144,7 +144,8 @@ Fluxo para quem quer vender o carro diretamente para a loja:
 - Upload de múltiplas fotos por carro (definindo foto de capa).
 - Atualização de **status do anúncio**: disponível, reservado, vendido (carro vendido some da vitrine pública ou fica marcado como indisponível, a definir).
 - **Fila de solicitações "Vender meu carro"**: listar submissões, ver detalhes/fotos enviadas, atualizar status, adicionar observações internas.
-- (Fora do MVP, mas a considerar depois) múltiplos usuários admin com papéis diferentes, relatório de métricas (cliques em WhatsApp por carro, etc.).
+- **Dashboard com métricas de cliques em WhatsApp por carro** (mês corrente + ranking "Carros mais clicados no mês") — implementado, não ficou fora do MVP como cogitado inicialmente.
+- (Fora do MVP, mas a considerar depois) múltiplos usuários admin com papéis diferentes.
 
 ---
 

@@ -201,8 +201,8 @@ Tabela de **uma única linha** (ou `id` fixo = 1), editável no painel admin —
 
 ## 12. Próximos passos técnicos sugeridos
 
-**Atualização:** Neon Postgres (plano Free, via Vercel Marketplace) e Vercel Blob (store `autoninho-photos`, acesso público) já estão provisionados e conectados ao projeto — `DATABASE_URL` e `BLOB_READ_WRITE_TOKEN` disponíveis via `vercel env pull`. Os passos abaixo continuam pendentes:
+**Atualização:** Neon Postgres (plano Free, via Vercel Marketplace) e Vercel Blob (store `autoninho-photos`, acesso público) já estão provisionados e conectados ao projeto — `DATABASE_URL` e `BLOB_READ_WRITE_TOKEN` disponíveis via `vercel env pull`. O schema deste documento já foi traduzido para **Drizzle ORM** (`lib/db/schema.ts`) e a migration inicial já foi gerada e aplicada no banco (`lib/db/migrations/0000_nice_tag.sql`, via `npm run db:generate` / `npm run db:migrate`) — as 8 tabelas e 9 enums já existem no Neon. Cliente de leitura/escrita em `lib/db/client.ts` (pool `node-postgres` + `attachDatabasePool`, para Fluid Compute). Os passos abaixo continuam pendentes:
 
-1. Escolher ORM/ferramenta de schema (ex. Drizzle ou Prisma) e escrever as migrations deste modelo no banco Neon já criado.
-2. Definir contrato de upload de fotos (assinatura de URL para Vercel Blob) usado tanto por `car_photos` quanto por `seller_submission_photos`.
-3. Definir os campos exatos do formulário de admin (CRUD de `cars`) e do formulário público de "Vender meu carro", 1:1 com as tabelas acima.
+1. Definir contrato de upload de fotos (assinatura de URL para Vercel Blob) usado tanto por `car_photos` quanto por `seller_submission_photos`.
+2. Definir os campos exatos do formulário de admin (CRUD de `cars`) e do formulário público de "Vender meu carro", 1:1 com as tabelas acima.
+3. Trocar os stubs das server actions (`createCarAction`, `updateSiteSettingsAction`, etc. — ver `docs/ADMIN_SERVER_ACTIONS.md`) pelas implementações reais usando `getDb()`.

@@ -16,13 +16,13 @@ O painel administrativo (`/admin`) está funcional e verificado ponta a ponta co
 
 **O que ainda falta é significativo**: o site público inteiro (o que efetivamente gera lead para o Toninho) ainda não existe, e o projeto nunca foi para o ar.
 
-## Fase 0 — Infra e primeiro deploy
+## Fase 0 — Infra e primeiro deploy ✅ concluída
 
-Curta, mas bloqueia a validação de tudo que vem depois em produção.
-
-- [ ] Definir `ADMIN_PASSWORD` e `ADMIN_SESSION_SECRET` reais nas envs da Vercel (Production + Preview) — hoje só existem em `.env.local`; sem isso o login quebra em produção
-- [ ] Conectar o projeto Vercel ao repositório `bruno-andrade/toninho` (deploy automático de Preview em PRs, Production em merges) — também resolve a ausência de "checks" no fluxo de PR
-- [ ] Primeiro deploy e validação do login/admin em produção
+- [x] `ADMIN_PASSWORD` e `ADMIN_SESSION_SECRET` reais nas envs da Vercel (Production + Preview) — senha entregue ao usuário fora do repositório
+- [x] Projeto Vercel conectado ao repositório `bruno-andrade/toninho` via `vercel git connect` (deploy automático de Preview em PRs, Production em merges em `main`) — PRs agora recebem o check "Vercel"
+- [x] Primeiro release cortado (Git Flow: `release/0.1.0` → `main`, tag `v0.1.0`, merge de volta em `develop`) e deployado
+- [x] Proteção SSO da Vercel desativada no projeto (por decisão do usuário) — a URL `*.vercel.app` de produção fica pública até termos domínio próprio (Fase 4)
+- [x] Login, sessão e leitura do Neon validados de ponta a ponta em produção real (Playwright contra a URL de produção)
 
 ## Fase 1 — Site público
 

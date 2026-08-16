@@ -16,8 +16,8 @@ export function FavoriteButton({ carId, size = 16 }: { carId: string; size?: num
         event.stopPropagation()
         toggleFavorite(carId)
       }}
-      style={{ fontSize: size, color: favorited ? "#FF5A36" : "#A8A59C" }}
-      className="cursor-pointer leading-none"
+      style={{ color: favorited ? "#C93A1A" : "#6B6B68", fontSize: size }}
+      className="flex h-6 w-6 cursor-pointer items-center justify-center leading-none"
     >
       {favorited ? "♥" : "♡"}
     </button>

@@ -42,7 +42,7 @@ export function FavoritosClient() {
         </span>
         <Link
           href="/busca"
-          className="mt-2 rounded-lg bg-[#FF5A36] px-5 py-2.5 font-body text-[13px] font-bold text-white"
+          className="mt-2 rounded-lg bg-[#C93A1A] px-5 py-2.5 font-body text-[13px] font-bold text-white"
         >
           Ver carros
         </Link>

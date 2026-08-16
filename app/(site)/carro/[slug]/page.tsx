@@ -82,12 +82,12 @@ export default async function CarDetailPage(props: PageProps<"/carro/[slug]">) {
       <DetailViewTracker carId={car.id} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      <div className="px-6 py-4 font-body text-xs text-[#A8A59C] sm:px-12">
-        <Link href="/" className="hover:text-[#FF5A36]">
+      <div className="px-6 py-4 font-body text-xs text-[#6B6B68] sm:px-12">
+        <Link href="/" className="hover:text-[#C93A1A]">
           Início
         </Link>{" "}
         /{" "}
-        <Link href="/busca" className="hover:text-[#FF5A36]">
+        <Link href="/busca" className="hover:text-[#C93A1A]">
           Comprar carros
         </Link>{" "}
         / {car.brand} / {car.model}
@@ -99,7 +99,7 @@ export default async function CarDetailPage(props: PageProps<"/carro/[slug]">) {
             {cover ? (
               <Image src={cover.url} alt={`${car.brand} ${car.model}`} fill sizes="700px" priority className="object-cover" />
             ) : (
-              <div className="flex h-full items-center justify-center font-body text-xs font-semibold uppercase text-[#A8A59C]">
+              <div className="flex h-full items-center justify-center font-body text-xs font-semibold uppercase text-[#5A5A57]">
                 Galeria de fotos
               </div>
             )}

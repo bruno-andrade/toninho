@@ -37,7 +37,7 @@ export default async function HomePage() {
     <div>
       <section className="flex flex-col items-center gap-10 bg-[#F7F7F5] px-6 py-14 sm:flex-row sm:px-12 sm:py-16">
         <div className="flex max-w-xl flex-col gap-4">
-          <span className="font-body text-[11px] font-bold uppercase tracking-wider text-[#FF5A36]">
+          <span className="font-body text-[11px] font-bold uppercase tracking-wider text-[#C93A1A]">
             Carros usados, sem dor de cabeça
           </span>
           <h1 className="font-heading text-3xl font-extrabold leading-tight text-[#1A1A1A] sm:text-4xl">
@@ -92,7 +92,7 @@ export default async function HomePage() {
             </label>
             <button
               type="submit"
-              className="rounded-lg bg-[#FF5A36] px-6 py-2.5 font-body text-[13px] font-bold text-white transition hover:bg-[#E14A28]"
+              className="rounded-lg bg-[#C93A1A] px-6 py-2.5 font-body text-[13px] font-bold text-white transition hover:bg-[#B83318]"
             >
               Buscar carros
             </button>
@@ -112,7 +112,7 @@ export default async function HomePage() {
       <section className="px-6 py-12 sm:px-12">
         <div className="mb-5 flex items-baseline justify-between">
           <h2 className="font-heading text-xl font-extrabold text-[#1A1A1A] sm:text-2xl">Carros em destaque</h2>
-          <Link href="/busca" className="font-body text-[13px] font-bold text-[#FF5A36]">
+          <Link href="/busca" className="font-body text-[13px] font-bold text-[#C93A1A]">
             Ver todos os carros ›
           </Link>
         </div>
@@ -134,7 +134,7 @@ export default async function HomePage() {
         <div className="flex flex-col gap-5 sm:flex-row">
           {HOW_IT_WORKS.map((step, index) => (
             <div key={step.title} className="flex flex-1 flex-col gap-2 rounded-2xl bg-white p-5">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FF5A36] font-heading text-sm font-extrabold text-white">
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#C93A1A] font-heading text-sm font-extrabold text-white">
                 {index + 1}
               </span>
               <span className="font-heading text-sm font-bold text-[#1A1A1A]">{step.title}</span>

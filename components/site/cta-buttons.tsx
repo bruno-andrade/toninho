@@ -9,7 +9,7 @@ export function WhatsappInterestButton({ carId, href }: { carId: string; href: s
       target="_blank"
       rel="noopener"
       onClick={() => trackEvent(carId, "whatsapp_interest_click")}
-      className="rounded-lg bg-[#FF5A36] py-3 text-center font-body text-sm font-bold text-white transition hover:bg-[#E14A28]"
+      className="rounded-lg bg-[#C93A1A] py-3 text-center font-body text-sm font-bold text-white transition hover:bg-[#B83318]"
     >
       Tenho interesse pelo WhatsApp
     </a>

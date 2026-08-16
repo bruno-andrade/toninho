@@ -1,6 +1,7 @@
 "use client"
 
 import { upload } from "@vercel/blob/client"
+import Link from "next/link"
 import { useActionState, useRef, useState } from "react"
 import { Field, SelectField } from "@/components/site/form-field"
 import { submitSellRequestAction, type SubmitSellRequestState } from "./actions"
@@ -114,7 +115,11 @@ export function SellForm() {
       </div>
 
       <p className="font-body text-xs text-[#6B6B68]">
-        Seus dados são usados só para contato sobre a avaliação do seu carro pela equipe AuToninho.
+        Seus dados são usados só para contato sobre a avaliação do seu carro pela equipe AuToninho. Veja a{" "}
+        <Link href="/politica-de-privacidade" className="underline hover:text-[#FF5A36]">
+          política de privacidade
+        </Link>
+        .
       </p>
 
       <button

@@ -1,13 +1,11 @@
 import type { Metadata } from "next"
-import { eq } from "drizzle-orm"
+import { asc, eq } from "drizzle-orm"
 import { notFound } from "next/navigation"
 import { getDb } from "@/lib/db/client"
-import { cars } from "@/lib/db/schema"
-import { EditCarForm } from "./edit-car-form"
+import { carPhotos, cars } from "@/lib/db/schema"
+import { CarEditTabs } from "./car-edit-tabs"
 
 export const metadata: Metadata = { title: "Editar carro" }
-
-const TABS = ["Dados básicos", "Fotos", "Laudo de inspeção", "Histórico"] as const
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
 
@@ -15,7 +13,11 @@ export default async function EditCarPage(props: PageProps<"/admin/cars/[carId]"
   const { carId } = await props.params
   if (!UUID_RE.test(carId)) notFound()
 
-  const [car] = await getDb().select().from(cars).where(eq(cars.id, carId)).limit(1)
+  const db = getDb()
+  const [[car], photos] = await Promise.all([
+    db.select().from(cars).where(eq(cars.id, carId)).limit(1),
+    db.select().from(carPhotos).where(eq(carPhotos.carId, carId)).orderBy(asc(carPhotos.position)),
+  ])
   if (!car) notFound()
 
   return (
@@ -27,25 +29,7 @@ export default async function EditCarPage(props: PageProps<"/admin/cars/[carId]"
         <p className="mt-1 text-sm text-neutral-400">{car.slug}</p>
       </header>
 
-      <div className="flex gap-2 border-b border-neutral-800">
-        {TABS.map((tab, index) => (
-          <span
-            key={tab}
-            className={`px-4 py-2 text-sm font-medium ${
-              index === 0 ? "border-b-2 border-orange-500 text-white" : "text-neutral-500"
-            }`}
-          >
-            {tab}
-          </span>
-        ))}
-      </div>
-
-      <EditCarForm car={car} />
-
-      <div className="rounded-xl border border-dashed border-neutral-800 p-6 text-sm text-neutral-400">
-        Fotos, laudo de inspeção e histórico entram numa próxima etapa (upload de imagens via Vercel Blob) — ver{" "}
-        <code className="rounded bg-neutral-800 px-1.5 py-0.5 text-xs">docs/ADMIN_ROUTES.md</code> (seção 4.5).
-      </div>
+      <CarEditTabs car={car} photos={photos} />
     </div>
   )
 }

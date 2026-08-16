@@ -1,10 +1,10 @@
 "use server"
 
-import { eq } from "drizzle-orm"
+import { and, eq } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
 import type { ActionResult } from "@/lib/actions/action-result"
 import { getDb } from "@/lib/db/client"
-import { cars } from "@/lib/db/schema"
+import { carPhotos, cars } from "@/lib/db/schema"
 
 export type UpdateCarBasicsState = ActionResult<null> | null
 
@@ -94,6 +94,43 @@ export async function updateCarBasicsAction(
       ok: false,
       error: { code: "DB_ERROR", message: "Não foi possível salvar as alterações. Tente novamente." },
     }
+  }
+
+  revalidatePath(`/admin/cars/${carId}`)
+  revalidatePath("/admin/cars")
+  return { ok: true, data: null }
+}
+
+export async function publishCarAction(carId: string): Promise<ActionResult<null>> {
+  const db = getDb()
+
+  const [car] = await db.select({ status: cars.status, price: cars.price }).from(cars).where(eq(cars.id, carId)).limit(1)
+  if (!car) {
+    return { ok: false, error: { code: "NOT_FOUND", message: "Carro não encontrado." } }
+  }
+  if (car.status !== "draft") {
+    return { ok: false, error: { code: "INVALID_TRANSITION", message: "Este carro já foi publicado." } }
+  }
+  if (!(Number(car.price) > 0)) {
+    return { ok: false, error: { code: "MISSING_PRICE", message: "Defina um preço antes de publicar." } }
+  }
+
+  const [cover] = await db
+    .select({ id: carPhotos.id })
+    .from(carPhotos)
+    .where(and(eq(carPhotos.carId, carId), eq(carPhotos.isCover, true)))
+    .limit(1)
+  if (!cover) {
+    return {
+      ok: false,
+      error: { code: "MISSING_COVER_PHOTO", message: "Adicione ao menos uma foto de capa antes de publicar." },
+    }
+  }
+
+  try {
+    await db.update(cars).set({ status: "available", updatedAt: new Date() }).where(eq(cars.id, carId))
+  } catch {
+    return { ok: false, error: { code: "DB_ERROR", message: "Não foi possível publicar o carro." } }
   }
 
   revalidatePath(`/admin/cars/${carId}`)

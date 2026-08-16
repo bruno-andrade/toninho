@@ -4,17 +4,13 @@ Panorama do que já existe e do que falta para lançar o MVP definido no [PRD.md
 
 ## Onde estamos
 
-O painel administrativo (`/admin`) está funcional e verificado ponta a ponta contra o Neon e o Vercel Blob reais:
+**Atualização (v0.5.0):** todas as fases técnicas do MVP (0 a 4) estão concluídas e em produção em `https://toninho-bay.vercel.app`. O que resta é só conteúdo/decisão de negócio do Toninho (estoque real, WhatsApp/endereço definitivos — Fase 3) e o domínio próprio (Fase 4), ambos deliberadamente adiados por decisão do usuário e sem bloquear o restante do produto.
 
-- Autenticação por senha única, sessão via cookie assinado, rotas protegidas
-- Layout e navegação do admin
-- Neon Postgres (plano Free) + Drizzle ORM, schema completo migrado
-- Vercel Blob (`autoninho-photos`, acesso público) para fotos
-- CRUD de carros: criar, listar, editar dados básicos, publicar (`draft` → `available`), fotos (upload, capa, reordenar, remover)
-- Configurações da loja: leitura/gravação real
-- Dashboard: 2 métricas reais (carros ativos, solicitações pendentes)
+Resumo do que existe hoje:
 
-**O que ainda falta é significativo**: o site público inteiro (o que efetivamente gera lead para o Toninho) ainda não existe, e o projeto nunca foi para o ar.
+- **Site público completo**: Home, Busca, Detalhe do carro, Favoritos, Como funciona, Vender meu carro — todas com SEO (`generateMetadata`, Open Graph, `schema.org Vehicle`, sitemap/robots) e Lighthouse 100/100 em Acessibilidade e Boas práticas.
+- **Painel administrativo completo**: autenticação por senha única (sessão via cookie assinado), CRUD de carros (dados, fotos, laudo de inspeção, histórico, publicar/arquivar/status), solicitações de venda (lista, detalhe, criar carro a partir de uma solicitação), configurações da loja, Dashboard com métricas reais (carros ativos, solicitações pendentes, cliques em WhatsApp/agendamento no mês, ranking de carros mais clicados).
+- **Infra real**: Neon Postgres + Drizzle ORM, Vercel Blob para fotos, deploy automático via Vercel (Preview em PR, Production em `main`).
 
 ## Fase 0 — Infra e primeiro deploy ✅ concluída
 
@@ -65,7 +61,7 @@ Verificado de ponta a ponta com Playwright + inspeção direta do Neon: laudo e 
   - `htmlLimitedBots` configurado em `next.config.ts` pra garantir que bots de preview de link (WhatsApp incluso — canal de contato principal do site) sempre recebam a metadata já resolvida no `<head>`, e não a versão em streaming.
   - Dois "achados" do Lighthouse verificados e descartados por não serem bugs reais: `is-crawlable` em `/favoritos` (página é `noindex` de propósito, só tem conteúdo de `localStorage` por usuário) e `meta-description` ausente em `/carro/[slug]` num único run (confirmado via `curl` com 3 user-agents diferentes que a tag existe corretamente dentro do `<head>` — falso negativo do próprio Lighthouse).
 - [x] Conferência mobile/desktop da implementação real — verificado com Playwright (viewports 390×844 e 1440×900) nas 6 páginas públicas + política de privacidade, com 2 carros de teste reais (com foto) pra validar grid/cards/galeria. Sem overflow, sem quebra de layout; dados limpos do Neon/Blob depois.
-- [ ] Domínio próprio (`autoninho.com.br`) — compra e configuração, fora do tier grátis de hospedagem
+- [ ] Domínio próprio (`autoninho.com.br`) — compra e configuração, fora do tier grátis de hospedagem — decisão do usuário: fica pra depois, não bloqueia o restante do MVP; site segue publicado em `https://toninho-bay.vercel.app`
 - [x] Revisão final: docs batendo com o que foi implementado — auditado `PRD.md`, `DATA_MODEL.md`, `ADMIN_ROUTES.md` e `ADMIN_SERVER_ACTIONS.md` contra o código real. `DATA_MODEL.md` e as rotas do painel batiam exatamente. Achados corrigidos:
   - **Gap real (corrigido)**: o Dashboard (`/admin`) nunca chegou a consultar `car_events` — os 2 cliques em WhatsApp/agendamento apareciam como `"—"` fixo e "Carros mais clicados" como lista sempre vazia, apesar de `POST /api/events` já gravar os eventos corretamente desde a Fase 1. Agora o Dashboard agrega de verdade (mês corrente) os cliques em "Tenho interesse"/"Agendar visita" e lista o top 5 de carros por cliques em WhatsApp no mês, com link direto pra editar. Verificado com Playwright + dados de teste no Neon.
   - **Drift de documentação (corrigido, sem mudar código)**: `ADMIN_SERVER_ACTIONS.md` descrevia todas as actions recebendo um único objeto de input tipado; na implementação real, actions ligadas a `<form>`/`useActionState` recebem `FormData` (e `createCarAction`/`updateCarBasicsAction` usam `redirect()` no sucesso em vez de retornar `ActionResult`), e as demais actions recebem argumentos posicionais, não um objeto — documento atualizado para refletir as assinaturas reais.

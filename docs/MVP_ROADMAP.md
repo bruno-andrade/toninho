@@ -24,20 +24,21 @@ O painel administrativo (`/admin`) está funcional e verificado ponta a ponta co
 - [x] Proteção SSO da Vercel desativada no projeto (por decisão do usuário) — a URL `*.vercel.app` de produção fica pública até termos domínio próprio (Fase 4)
 - [x] Login, sessão e leitura do Neon validados de ponta a ponta em produção real (Playwright contra a URL de produção)
 
-## Fase 1 — Site público
+## Fase 1 — Site público ✅ concluída
 
-A peça que falta e a mais importante: é o que transforma o estoque cadastrado no admin em geração de lead de verdade.
+- [x] Home (hero + busca rápida, selos de confiança, carros em destaque, resumo "Como funciona")
+- [x] Listagem/Busca (filtros, grid, paginação — via formulário GET, funciona sem JS)
+- [x] Detalhe do carro (galeria, ficha técnica, laudo de inspeção, histórico, localização, carros parecidos, CTAs "Tenho interesse pelo WhatsApp" / "Agendar visita")
+- [x] Favoritos (via `localStorage`, sem login)
+- [x] Como funciona (página estática)
+- [x] Vender meu carro (formulário público → `submitSellRequestAction`, com upload de fotos pro Blob)
+- [x] `site_settings` já é lido de verdade (com fallback pros valores do protótipo enquanto os reais não são cadastrados na Fase 3)
+- [x] SEO: `generateMetadata` + Open Graph por página, `schema.org Vehicle` (JSON-LD) no Detalhe, `sitemap.ts`, `robots.ts`
+- [x] `POST /api/events` ligado aos CTAs da página de Detalhe — alimenta as 2 métricas que faltavam no dashboard
+- [x] Rate limiting (em memória, por IP) em `submitSellRequestAction`, no upload de fotos do formulário de venda e em `POST /api/events`
+- [x] ISR (`revalidate = 60`) na Home e no Detalhe do carro — sem isso essas páginas ficariam congeladas com o snapshot do build
 
-- [ ] Home (hero + busca rápida, selos de confiança, carros em destaque, resumo "Como funciona")
-- [ ] Listagem/Busca (filtros, grid, paginação)
-- [ ] Detalhe do carro (galeria, ficha técnica, laudo de inspeção, histórico, localização, carros parecidos, CTAs "Tenho interesse pelo WhatsApp" / "Agendar visita")
-- [ ] Favoritos (via `localStorage`, sem login)
-- [ ] Como funciona (página estática)
-- [ ] Vender meu carro (formulário público → `submitSellRequestAction`, hoje só especificado em ADMIN_SERVER_ACTIONS.md)
-- [ ] Usar `site_settings` (WhatsApp/endereço reais) em vez de valores fixos
-- [ ] SEO: `generateMetadata`, Open Graph, `schema.org Vehicle`, `sitemap.ts`, `robots.ts`
-- [ ] `POST /api/events` ligado aos CTAs da página de Detalhe — alimenta as 2 métricas que faltam no dashboard
-- [ ] Rate limiting em `submitSellRequestAction` e `POST /api/events`
+Verificado de ponta a ponta com Playwright contra o Neon/Blob reais: criar e publicar um carro no admin → aparece na Home/Busca/Detalhe → favoritar → aparece em Favoritos → clique no WhatsApp gera evento em `car_events` → formulário "Vender meu carro" grava em `seller_submissions` → `sitemap.xml`/`robots.txt` corretos.
 
 ## Fase 2 — Fechar os gaps do admin
 

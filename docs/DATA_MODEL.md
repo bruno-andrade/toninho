@@ -201,6 +201,8 @@ Tabela de **uma única linha** (ou `id` fixo = 1), editável no painel admin —
 
 ## 12. Próximos passos técnicos sugeridos
 
-1. Confirmar ORM/ferramenta de schema (ex. Drizzle ou Prisma) para traduzir este modelo em migrations no Postgres da Vercel Marketplace.
+**Atualização:** Neon Postgres (plano Free, via Vercel Marketplace) e Vercel Blob (store `autoninho-photos`, acesso público) já estão provisionados e conectados ao projeto — `DATABASE_URL` e `BLOB_READ_WRITE_TOKEN` disponíveis via `vercel env pull`. Os passos abaixo continuam pendentes:
+
+1. Escolher ORM/ferramenta de schema (ex. Drizzle ou Prisma) e escrever as migrations deste modelo no banco Neon já criado.
 2. Definir contrato de upload de fotos (assinatura de URL para Vercel Blob) usado tanto por `car_photos` quanto por `seller_submission_photos`.
 3. Definir os campos exatos do formulário de admin (CRUD de `cars`) e do formulário público de "Vender meu carro", 1:1 com as tabelas acima.

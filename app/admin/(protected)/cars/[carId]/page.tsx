@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { asc, eq } from "drizzle-orm"
 import { notFound } from "next/navigation"
 import { getDb } from "@/lib/db/client"
-import { carPhotos, cars } from "@/lib/db/schema"
+import { carHistory, carInspectionItems, carPhotos, cars } from "@/lib/db/schema"
 import { CarEditTabs } from "./car-edit-tabs"
 
 export const metadata: Metadata = { title: "Editar carro" }
@@ -14,9 +14,11 @@ export default async function EditCarPage(props: PageProps<"/admin/cars/[carId]"
   if (!UUID_RE.test(carId)) notFound()
 
   const db = getDb()
-  const [[car], photos] = await Promise.all([
+  const [[car], photos, inspectionItems, historyRows] = await Promise.all([
     db.select().from(cars).where(eq(cars.id, carId)).limit(1),
     db.select().from(carPhotos).where(eq(carPhotos.carId, carId)).orderBy(asc(carPhotos.position)),
+    db.select().from(carInspectionItems).where(eq(carInspectionItems.carId, carId)),
+    db.select().from(carHistory).where(eq(carHistory.carId, carId)).limit(1),
   ])
   if (!car) notFound()
 
@@ -29,7 +31,7 @@ export default async function EditCarPage(props: PageProps<"/admin/cars/[carId]"
         <p className="mt-1 text-sm text-neutral-400">{car.slug}</p>
       </header>
 
-      <CarEditTabs car={car} photos={photos} />
+      <CarEditTabs car={car} photos={photos} inspectionItems={inspectionItems} history={historyRows[0] ?? null} />
     </div>
   )
 }

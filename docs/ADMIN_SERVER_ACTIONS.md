@@ -331,9 +331,7 @@ Para completar o quadro — estas telas carregam dados direto via Server Compone
 
 ## 10. Próximos passos técnicos
 
-**Atualização:** `createCarAction`, `updateCarBasicsAction`, `updateSiteSettingsAction`, `publishCarAction` e todas as actions de fotos (`attachCarPhotoAction`, `setCoverPhotoAction`, `deleteCarPhotoAction`, `reorderCarPhotosAction`) já estão implementadas com Drizzle/Neon, verificadas de ponta a ponta (Playwright + inspeção direta do banco). O Route Handler `/api/car-photos/upload-token` também já existe. Restam:
+**Atualização:** todas as server actions listadas neste documento já estão implementadas com Drizzle/Neon e verificadas de ponta a ponta (Playwright + inspeção direta do banco) — `createCarAction`, `updateCarBasicsAction`, `publishCarAction`, `setCarStatusAction`, `archiveCarAction`, as actions de fotos (`attachCarPhotoAction`, `setCoverPhotoAction`, `deleteCarPhotoAction`, `reorderCarPhotosAction`), `updateInspectionItemsAction`, `updateCarHistoryAction`, `updateSiteSettingsAction`, `submitSellRequestAction`, `updateSellRequestStatusAction` e `createCarFromSellRequestAction`. Os dois Route Handlers de upload (`/api/car-photos/upload-token` e `/api/sell-request-photos/upload-token`) e `POST /api/events` também existem, com rate limiting em memória. Resta:
 
 1. Escolher a lib de schema/validação (ex. Zod) e escrever os schemas compartilhados entre client e server a partir dos contratos acima (hoje a validação é manual, por função).
-2. `updateInspectionItemsAction` e `updateCarHistoryAction` (abas "Laudo de inspeção" e "Histórico", ainda placeholders).
-3. `submitSellRequestAction`, `updateSellRequestStatusAction` e `createCarFromSellRequestAction` (fluxo "Vender meu carro", depende do formulário público que ainda não existe).
-4. Definir a estratégia de rate limiting (ex. Vercel Firewall / `@vercel/functions` rate limit helper) para `submitSellRequestAction` e `POST /api/events`.
+2. Rate limiting em memória não é distribuído entre instâncias/regiões — considerar Upstash Redis (`@upstash/ratelimit`) se o volume justificar.

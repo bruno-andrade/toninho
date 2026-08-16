@@ -52,9 +52,9 @@ Verificado de ponta a ponta com Playwright + inspeção direta do Neon: laudo e 
 
 ## Fase 3 — Dados e conteúdo reais
 
-- [ ] WhatsApp e endereço reais da loja cadastrados em `/admin/settings`
-- [ ] Estoque real de carros do Toninho cadastrado
-- [ ] Política de privacidade / aviso de LGPD no formulário "Vender meu carro"
+- [ ] WhatsApp e endereço reais da loja cadastrados em `/admin/settings` — decisão do usuário: fica para o Toninho fazer quando for lançar, não bloqueia o resto
+- [ ] Estoque real de carros do Toninho cadastrado — decisão do usuário: idem, o painel já está pronto pra isso
+- [x] Política de privacidade / aviso de LGPD (`/politica-de-privacidade`, linkado no rodapé e no formulário "Vender meu carro") — texto genérico por decisão do usuário, ainda sem CNPJ/razão social definitivos
 
 ## Fase 4 — Polimento e lançamento
 

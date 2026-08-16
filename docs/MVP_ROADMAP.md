@@ -40,13 +40,15 @@ O painel administrativo (`/admin`) está funcional e verificado ponta a ponta co
 
 Verificado de ponta a ponta com Playwright contra o Neon/Blob reais: criar e publicar um carro no admin → aparece na Home/Busca/Detalhe → favoritar → aparece em Favoritos → clique no WhatsApp gera evento em `car_events` → formulário "Vender meu carro" grava em `seller_submissions` → `sitemap.xml`/`robots.txt` corretos.
 
-## Fase 2 — Fechar os gaps do admin
+## Fase 2 — Fechar os gaps do admin ✅ concluída
 
-- [ ] Aba "Laudo de inspeção" (`updateInspectionItemsAction` + UI)
-- [ ] Aba "Histórico do veículo" (`updateCarHistoryAction` + UI)
-- [ ] Lista de carros: busca por marca/modelo, filtro por status, troca rápida de status (`setCarStatusAction`)
-- [ ] Botão de arquivar/remover carro (`archiveCarAction`) na edição
-- [ ] Solicitações de venda: lista/detalhe reais + `updateSellRequestStatusAction` + `createCarFromSellRequestAction` (dependem do formulário público da Fase 1)
+- [x] Aba "Laudo de inspeção" (`updateInspectionItemsAction` + UI)
+- [x] Aba "Histórico do veículo" (`updateCarHistoryAction` + UI)
+- [x] Lista de carros: busca por marca/modelo, filtro por status, troca rápida de status (`setCarStatusAction`)
+- [x] Botão de arquivar/remover carro (`archiveCarAction`) na edição, com confirmação
+- [x] Solicitações de venda: lista/detalhe reais, `updateSellRequestStatusAction`, `createCarFromSellRequestAction` (cria carro em draft pré-preenchido e leva pra edição)
+
+Verificado de ponta a ponta com Playwright + inspeção direta do Neon: laudo e histórico salvos, busca/filtro/troca de status na lista, arquivar/restaurar, e o fluxo completo de uma solicitação de venda até virar um carro em draft.
 
 ## Fase 3 — Dados e conteúdo reais
 

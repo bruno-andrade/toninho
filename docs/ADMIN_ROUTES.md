@@ -111,7 +111,7 @@ Cada aba salva independentemente (Server Action própria por aba), para o admin 
 - Galeria de fotos enviadas.
 - Contato do vendedor: nome, telefone (com link direto para abrir WhatsApp com esse número), cidade.
 - Campo editável: **status** (select) e **notas internas** (texto livre, não visível ao vendedor).
-- Ação contextual: quando o status muda para **"comprado"**, botão **"Criar anúncio a partir desta solicitação"** — leva a `/admin/cars/new` com marca/modelo/ano/km/câmbio/cor pré-preenchidos a partir da solicitação, evitando redigitar dados já informados pelo vendedor.
+- Ação contextual: quando o status muda para **"comprado"**, botão **"Criar anúncio a partir desta solicitação"** — cria o carro direto em `draft` (marca/modelo/ano/km/câmbio/cor pré-preenchidos a partir da solicitação, preço zerado e carroceria genérica até o admin ajustar) e leva pra tela de edição do carro criado, evitando redigitar dados já informados pelo vendedor. (Implementado assim, e não pré-preenchendo o formulário de `/admin/cars/new`, para bater com o contrato de `createCarFromSellRequestAction` em `docs/ADMIN_SERVER_ACTIONS.md`.)
 
 ### 4.8 Configurações da loja — `/admin/settings`
 
